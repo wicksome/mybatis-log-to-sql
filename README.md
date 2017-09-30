@@ -1,5 +1,14 @@
 # Convert mybatis's log to SQL
 
+> Replace all `?` characters to parameters.
+
+## Install
+
+```bash
+$ git clone https://github.com/wicksome/mybatis-log-to-sql.git
+$ cd mybatis-log-to-sql && npm init
+```
+
 ## Usage
 
 ```bash
