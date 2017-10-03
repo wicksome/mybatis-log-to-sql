@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "yeongjun.kim",
-  "license": "ISC",
+  "author": "yeongjun.kim <opid911@gmail.com> (https://wickso.me)",
+  "license": "MIT",
   "dependencies": {
     "colors": "^1.1.2"
   }
