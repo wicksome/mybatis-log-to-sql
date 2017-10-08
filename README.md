@@ -2,6 +2,10 @@
 
 > Replace all `?` characters to parameters.
 
+![demo](https://user-images.githubusercontent.com/5036939/31315987-d1997990-ac5e-11e7-9012-b8f76352eb48.png)
+
+https://wickso.me/mybatis-log-to-sql/
+
 **AS-IS**
 
 ```
@@ -35,8 +39,3 @@ SELECT * FROM table WHERE id = 2001
 ✔ Copy sql!
 ```
 
-## Web
-
-https://wickso.me/mybatis-log-to-sql/
-
-![demo](https://user-images.githubusercontent.com/5036939/31315987-d1997990-ac5e-11e7-9012-b8f76352eb48.png)
