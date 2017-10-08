@@ -1,34 +1,7 @@
 const readline = require('readline');
 const colors = require('colors');
 
-const slice = function(str, token) {
-    let idx = str.trim().indexOf(token);
-    idx = (idx !== -1) ? idx + token.length : 0;
-    return str.slice(idx);
-}
-
-const filteringSql = function(sqlStr) {
-    return slice(sqlStr, 'Preparing: ');
-};
-
-const filteringArgs = function(paramsStr) {
-    paramsStr = slice(paramsStr, 'Parameters: ');
-
-    const re = new RegExp('(.+)\((.+)\)');
-    return paramsStr.split(',').map(function(param) {
-        const t = /(.+)\((.+)\)/.exec(param.trim());
-        if(!t) return undefined;
-	    return (t[2] === 'String') ? `'${t[1]}'` : t[1];
-    });
-};
-
-const getResult = function(sql, params) {
-    let idx = 0;
-    while(sql.match(/(?! = )\?/) != null) {
-        sql = sql.replace(/(?! = )\?/, params[idx++]);
-    }
-    return sql;
-};
+const converter = require('./mybatis-log-to-sql.js')
 
 function pbcopy(data) {
     var proc = require('child_process').spawn('pbcopy');
@@ -51,7 +24,7 @@ rl.question(`${prefix}SQL: `, (sqlStr) => {
             return;
         }
 
-        const sql = getResult(filteringSql(sqlStr), filteringArgs(paramsStr));
+        const sql = converter(sqlStr, paramsStr);
         console.log(sql);
         console.log('✔ Copy sql!'.green);
         pbcopy(sql);
