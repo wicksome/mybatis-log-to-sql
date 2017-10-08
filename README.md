@@ -1,5 +1,7 @@
 # Convert mybatis's log to SQL
 
+[![npm version](https://badge.fury.io/js/mybatis-sql-log-to-sql.svg)](https://badge.fury.io/js/mybatis-sql-log-to-sql)
+
 > Replace all `?` characters to parameters.
 
 ![demo](https://user-images.githubusercontent.com/5036939/31315987-d1997990-ac5e-11e7-9012-b8f76352eb48.png)
