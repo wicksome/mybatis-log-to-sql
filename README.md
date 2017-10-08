@@ -2,20 +2,41 @@
 
 > Replace all `?` characters to parameters.
 
-## Install
+**AS-IS**
+
+```
+2017-10-08 17:39:34 [DEBUG](BaseJdbcLogger.java:159) ==>  Preparing: SELECT * FROM table WHERE id = ?
+2017-10-08 17:39:34 [DEBUG](BaseJdbcLogger.java:159) ==> Parameters: 2001(Integer)
+```
+
+**TO-BE**
+
+```
+SELECT * FROM table WHERE id = 2001
+```
+
+## CLI
+
+### Install
 
 ```bash
 $ git clone https://github.com/wicksome/mybatis-log-to-sql.git
 $ cd mybatis-log-to-sql && npm init
 ```
 
-## Usage
+### Usage
 
 ```bash
 $ node index.js
->> SQL: SELECT * FROM table WHERE id in ( ? , ? , ? ) AND name = ?
->> Parameters: 1(Long), 2(Long), 3(Long), str(String)
+>> SQL: 2017-10-08 17:39:34 [DEBUG](BaseJdbcLogger.java:159) ==>  Preparing: SELECT * FROM table WHERE id = ?
+>> Parameters: 2017-10-08 17:39:34 [DEBUG](BaseJdbcLogger.java:159) ==> Parameters: 2001(Integer)
 --------------------------------------------------------------------------------
-SELECT * FROM table WHERE id in (1, 2, 3) AND name = 'str'
+SELECT * FROM table WHERE id = 2001
 ✔ Copy sql!
 ```
+
+## Web
+
+https://wickso.me/mybatis-log-to-sql/
+
+![demo](https://user-images.githubusercontent.com/5036939/31315987-d1997990-ac5e-11e7-9012-b8f76352eb48.png)
