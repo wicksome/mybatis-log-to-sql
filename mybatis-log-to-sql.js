@@ -8,7 +8,11 @@ const filteringSql = function(sqlStr) {
     if(!sqlStr || sqlStr.length === 0) {
         return '';
     }
-    return slice(sqlStr, 'Preparing: ');
+    if(sqlStr.search('JakartaCommonsLoggingImpl')) {
+        return slice(sqlStr, 'Executing Statement: ');
+    } else {
+        return slice(sqlStr, 'Preparing: ');
+    }
 };
 
 const filteringArgs = function(paramsStr) {
@@ -17,12 +21,25 @@ const filteringArgs = function(paramsStr) {
     }
     paramsStr = slice(paramsStr, 'Parameters: ');
 
-    const re = new RegExp('(.+)\((.+)\)');
-    return paramsStr.split(',').map(function(param) {
-        const t = /(.+)\((.+)\)/.exec(param.trim());
-        if(!t) return undefined;
-	    return (t[2] === 'String') ? `'${t[1]}'` : t[1];
-    });
+    if(paramsStr.search('JakartaCommonsLoggingImpl')) {
+        const args = /\[(.+)\]/.exec(paramsStr.trim())[1];
+        return args.split(',').map(arg => {
+            if (arg.match(/^-{0,1}\d+$/)){
+                return arg;
+            } else if(arg.match(/^\d+\.\d+$/)){
+                return arg;
+            } else{
+                return `'${arg}'`;
+            }
+        });
+    } else {
+        const re = new RegExp('(.+)\((.+)\)');
+        return paramsStr.split(',').map(function(param) {
+            const t = /(.+)\((.+)\)/.exec(param.trim());
+            if(!t) return undefined;
+            return (t[2] === 'String') ? `'${t[1]}'` : t[1];
+        });   
+    }
 };
 
 const getResult = function(sql, params) {
