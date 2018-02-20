@@ -8,7 +8,7 @@ const filteringSql = function(sqlStr) {
     if(!sqlStr || sqlStr.length === 0) {
         return '';
     }
-    if(sqlStr.search('JakartaCommonsLoggingImpl')) {
+    if(sqlStr.search('JakartaCommonsLoggingImpl') > -1) {
         return slice(sqlStr, 'Executing Statement: ');
     } else {
         return slice(sqlStr, 'Preparing: ');
@@ -19,10 +19,9 @@ const filteringArgs = function(paramsStr) {
     if(!paramsStr || paramsStr.length === 0) {
         return [];
     }
-    paramsStr = slice(paramsStr, 'Parameters: ');
-
-    if(paramsStr.search('JakartaCommonsLoggingImpl')) {
-        const args = /\[(.+)\]/.exec(paramsStr.trim())[1];
+    
+    if(paramsStr.search('JakartaCommonsLoggingImpl') > -1) {
+        const args = /\[(.+)\]/.exec(slice(paramsStr, 'Parameters: ').trim())[1];
         return args.split(',').map(arg => {
             if (arg.match(/^-{0,1}\d+$/)){
                 return arg;
@@ -33,8 +32,7 @@ const filteringArgs = function(paramsStr) {
             }
         });
     } else {
-        const re = new RegExp('(.+)\((.+)\)');
-        return paramsStr.split(',').map(function(param) {
+        return slice(paramsStr, 'Parameters: ').split(',').map(function(param) {
             const t = /(.+)\((.+)\)/.exec(param.trim());
             if(!t) return undefined;
             return (t[2] === 'String') ? `'${t[1]}'` : t[1];
